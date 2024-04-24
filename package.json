@@ -6,7 +6,7 @@
   "scripts": {
     "test": "jest",
     "dev": "nodemon app.js",
-    "seed": "node ./database/seeds/seed.js"
+    "seed": "node ./database/seed.js"
   },
   "author": "",
   "license": "ISC",

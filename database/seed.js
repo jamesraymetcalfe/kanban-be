@@ -1,6 +1,6 @@
-const Project = require("../../mongoose-model/project.model");
-const data = require("../data/development-data.json");
-const { connectToDb } = require("../connection");
+const Project = require("../mongoose-model/project.model");
+const data = require("./data/development-data.json");
+const { connectToDb } = require("./connection");
 const { mongoose } = require("mongoose");
 
 const seedDevData = () => {
