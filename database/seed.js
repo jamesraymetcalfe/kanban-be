@@ -6,7 +6,6 @@ const { mongoose } = require("mongoose");
 const seedDevData = () => {
   return connectToDb()
     .then(() => {
-      console.log("Database connection established");
       return Project.deleteMany({});
     })
     .then(() => {

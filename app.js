@@ -1,10 +1,10 @@
 const express = require("express");
-const { connectToDb } = require("./database/connection");
+const { getEndpoints } = require("./controllers/api-controller");
+
 
 const app = express();
+app.use(express.json());
 
-connectToDb(() => {
-  app.listen(3000, () => {
-    console.log("app listening on port 3000");
-  });
-});
+app.get('/api', getEndpoints);
+
+module.exports = app;

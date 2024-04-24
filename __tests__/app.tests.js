@@ -2,11 +2,12 @@ const app = require("../app");
 const request = require("supertest");
 const data = require("../database/data/test-data.json");
 const mongoose = require("mongoose");
+const { connectToDb } = require("../database/connection");
+const Project = require("../mongoose-model/project.model");
 
 beforeEach(() => {
   return connectToDb()
     .then(() => {
-      console.log("Database connection established");
       return Project.deleteMany({});
     })
     .then(() => {
@@ -20,3 +21,21 @@ beforeEach(() => {
 });
 
 afterAll(() => mongoose.disconnect());
+
+describe("/api", () => {
+  test("GET:200 sends an object describing all the available endpoints", () => {
+    return request(app)
+      .get("/api")
+      .expect(200)
+      .then((response) => {
+        const { endpoints } = response.body;
+        for (const endpoint in endpoints) {
+          expect(endpoints[endpoint]).toMatchObject({
+            description: expect.any(String),
+            queries: expect.any(Array),
+            exampleResponse: expect.any(Object),
+          });
+        }
+      });
+  });
+});
