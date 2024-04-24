@@ -1,0 +1,77 @@
+[
+  {
+    "name": "My Kanban Board",
+    "description": "A sample Kanban board for managing tasks",
+    "lists": [
+      {
+        "name": "To Do",
+        "description": "Tasks that need to be completed",
+        "tickets": [
+          {
+            "name": "Fix login bug",
+            "description": "Investigate and fix login failure with invalid credentials.",
+            "due_date": "2024-04-27",
+            "priority_level": "High",
+            "assignee": "user123",
+            "color": "#ff0000"
+          },
+          {
+            "name": "Implement new feature X",
+            "description": "Add functionality X to the application",
+            "due_date": "2024-05-02",
+            "priority_level": "Medium"
+          }
+        ]
+      },
+      {
+        "name": "In Progress",
+        "description": "Tasks currently being worked on",
+        "tickets": [
+          {
+            "name": "Design user interface",
+            "description": "Create mockups for the new feature",
+            "assignee": "user456",
+            "color": "#ffff00"
+          }
+        ]
+      },
+      {
+        "name": "Done",
+        "description": "Completed tasks",
+        "tickets": [
+          {
+            "name": "Deploy latest update",
+            "description": "Push the new version to production",
+            "due_date": "2024-04-20" 
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Personal Kanban",
+    "description": "Tasks for personal projects and errands",
+    "lists": [
+      {
+        "name": "Errands",
+        "tickets": [
+          {
+            "name": "Buy groceries",
+            "description": "Pick up milk, bread, and vegetables",
+            "priority_level": "Low"
+          }
+        ]
+      },
+      {
+        "name": "Learning",
+        "tickets": [
+          {
+            "name": "Finish online course",
+            "description": "Complete modules 1-3 of the JavaScript course",
+            "due_date": "2024-04-30"
+          }
+        ]
+      }
+    ]
+  }
+]

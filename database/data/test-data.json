@@ -1,0 +1,49 @@
+[
+  {
+    "name": "Test Project 1",
+    "description": "A basic project for testing purposes",
+    "lists": [
+      {
+        "name": "To Do",
+        "tickets": [
+          {
+            "name": "Write unit tests",
+            "description": "Test API endpoints for basic functionality",
+            "due_date": "2024-04-25"
+          },
+          {
+            "name": "Test list creation",
+            "description": "Verify successful creation of new lists",
+            "priority_level": "High"
+          }
+        ]
+      },
+      {
+        "name": "In Progress",
+        "tickets": [
+          {
+            "name": "Test ticket update",
+            "description": "Simulate updating ticket details (name, description)",
+            "assignee": "user789"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Test Project 2",
+    "description": "Test project for list deletion",
+    "lists": [
+      {
+        "name": "List to be deleted",
+        "tickets": [
+          {
+            "name": "Test Ticket in List to be Deleted",
+            "description": "This ticket is for testing list deletion functionality",
+            "due_date": "2024-05-05"
+          }
+        ]
+      }
+    ]
+  }
+]
