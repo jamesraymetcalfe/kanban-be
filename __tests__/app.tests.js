@@ -39,3 +39,15 @@ describe("/api", () => {
       });
   });
 });
+
+describe("GET 404 - invalid endpoint", () => {
+  test("GET:404 send an appropriate status and error message when sent a non existent route", () => {
+    return request(app)
+      .get("/fjfjfjd")
+      .expect(404)
+      .then((response) => {
+        const error = response.body.msg;
+        expect(error).toBe("path not found");
+      });
+  });
+});
