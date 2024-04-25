@@ -1,5 +1,6 @@
 [
   {
+    "firebaseUserId": "1234",
     "name": "Test Project 1",
     "description": "A basic project for testing purposes",
     "lists": [
@@ -31,6 +32,7 @@
     ]
   },
   {
+    "firebaseUserId": "12345",
     "name": "Test Project 2",
     "description": "Test project for list deletion",
     "lists": [
@@ -41,6 +43,71 @@
             "name": "Test Ticket in List to be Deleted",
             "description": "This ticket is for testing list deletion functionality",
             "due_date": "2024-05-05"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "firebaseUserId": "6789",
+    "name": "Test Project 3",
+    "description": "Another test project",
+    "lists": [
+      {
+        "name": "Backlog",
+        "tickets": [
+          {
+            "name": "Implement user authentication",
+            "description": "Set up authentication system for users",
+            "due_date": "2024-05-15",
+            "assignee": "user123"
+          },
+          {
+            "name": "Design UI components",
+            "description": "Create mockups and wireframes for UI",
+            "priority_level": "High"
+          }
+        ]
+      },
+      {
+        "name": "Completed",
+        "tickets": [
+          {
+            "name": "Deploy to production",
+            "description": "Release the application to production environment",
+            "assignee": "user456"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "firebaseUserId": "6789",
+    "name": "Test Project 4",
+    "description": "Yet another test project",
+    "lists": [
+      {
+        "name": "Ideas",
+        "tickets": [
+          {
+            "name": "Brainstorm new features",
+            "description": "Generate ideas for upcoming features",
+            "due_date": "2024-05-10"
+          },
+          {
+            "name": "Research market trends",
+            "description": "Analyze market trends to inform feature development",
+            "priority_level": "Medium"
+          }
+        ]
+      },
+      {
+        "name": "In Progress",
+        "tickets": [
+          {
+            "name": "Develop prototype",
+            "description": "Create a prototype to validate new features",
+            "assignee": "user789"
           }
         ]
       }

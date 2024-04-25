@@ -3,19 +3,22 @@ const request = require("supertest");
 const data = require("../database/data/test-data.json");
 const mongoose = require("mongoose");
 const { connectToDb } = require("../database/connection");
-const Project = require("../mongoose-model/project.model");
+const { TestProject } = require("../mongoose-model/project.model");
 
 beforeEach(() => {
   return connectToDb()
     .then(() => {
-      return Project.deleteMany({});
+      return TestProject.deleteMany({});
     })
     .then(() => {
       const parsedData = JSON.parse(JSON.stringify(data));
-      return Project.insertMany(parsedData, { collection: "projects_test" });
+      console.log(parsedData)
+      return TestProject.insertMany(parsedData);
+    })
+    .then(() => {
+      console.log("Test data seeded successfully!");
     })
     .catch((error) => {
-      console.log(error);
       throw error;
     });
 });
@@ -40,8 +43,28 @@ describe("/api", () => {
   });
 });
 
+// describe("/api/users/:user_id/projects", () => {
+//   test("GET:200 sends an array of projects for the given user", () => {
+//     return request(app)
+//     .get("/api/users/1234/projects")
+//     .expect(200)
+//     .then((response) => {
+//     const { projects } = response.body;
+//     expect(projects).toHaveLength(2);
+//     projects.forEach((project) => {
+//       expect(project).toMatchObject({
+//         firebaseUserId: "6789",
+//         name: expect.any(String),
+//         description: expect.any(String),
+//         lists: expect.any(Array),
+//       })
+//     })
+//   })
+//   })
+// });
+
 describe("GET 404 - invalid endpoint", () => {
-  test("GET:404 send an appropriate status and error message when sent a non existent route", () => {
+  test("GET:404 sends an appropriate status and error message when sent a non existent route", () => {
     return request(app)
       .get("/fjfjfjd")
       .expect(404)
@@ -51,3 +74,4 @@ describe("GET 404 - invalid endpoint", () => {
       });
   });
 });
+

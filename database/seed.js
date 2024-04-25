@@ -1,19 +1,22 @@
-const Project = require("../mongoose-model/project.model");
+const { DevProject } = require("../mongoose-model/project.model");
 const data = require("./data/development-data.json");
 const { connectToDb } = require("./connection");
-const { mongoose } = require("mongoose");
+const mongoose = require("mongoose");
 
 const seedDevData = () => {
   return connectToDb()
     .then(() => {
-      return Project.deleteMany({});
+      return DevProject.deleteMany({});
     })
     .then(() => {
       const parsedData = JSON.parse(JSON.stringify(data));
-      return Project.insertMany(parsedData, { collection: "projects_dev" });
+      console.log(parsedData)
+      return DevProject.insertMany(parsedData);
+    })
+    .then(() => {
+      console.log("Development data seeded successfully!");
     })
     .catch((error) => {
-      console.log(error);
       throw error;
     })
     .finally(() => {

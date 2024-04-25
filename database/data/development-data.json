@@ -1,5 +1,6 @@
 [
   {
+    "firebaseUserId": "1234",
     "name": "My Kanban Board",
     "description": "A sample Kanban board for managing tasks",
     "lists": [
@@ -49,6 +50,7 @@
     ]
   },
   {
+    "firebaseUserId": "12345",
     "name": "Personal Kanban",
     "description": "Tasks for personal projects and errands",
     "lists": [
