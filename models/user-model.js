@@ -1,3 +1,3 @@
-exports.selectProjectsByUserID = () => {
+exports.selectProjectsByUserID = (user_id) => {
     
 }

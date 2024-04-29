@@ -6,7 +6,7 @@
   "scripts": {
     "test": "jest",
     "start": "nodemon listen.js",
-    "seed": "node ./database/seed.js"
+    "seed": "node ./database/run-seed.js"
   },
   "author": "",
   "license": "ISC",

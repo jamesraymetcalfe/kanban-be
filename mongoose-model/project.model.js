@@ -25,14 +25,7 @@ const projectSchema = new mongoose.Schema({
   lists: [listSchema],
 });
 
-const TestProject = mongoose.model(
-  "TestProject",
-  projectSchema,
-  "projects_test"
-);
-const DevProject = mongoose.model("DevProject", projectSchema, "projects_dev");
 
-module.exports = {
-  TestProject,
-  DevProject,
-};
+const Project = mongoose.model("Project", projectSchema);
+
+module.exports = Project
