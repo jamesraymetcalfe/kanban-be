@@ -46,7 +46,7 @@ describe("/api", () => {
 });
 
 describe("/api/users/:user_id/projects", () => {
-  test.only("GET:200 sends an array of projects for the given user", () => {
+  test("GET:200 sends an array of projects for the given user", () => {
     return request(app)
       .get("/api/users/6789/projects")
       .expect(200)
@@ -56,7 +56,7 @@ describe("/api/users/:user_id/projects", () => {
         projects.forEach((project) => {
           expect(project).toEqual(
             expect.objectContaining({
-              firebaseUserId: "6789",
+              firebaseUserId: 6789,
               name: expect.any(String),
               created_at: expect.any(String),
               lists: expect.any(Array),
@@ -80,6 +80,34 @@ describe("/api/users/:user_id/projects", () => {
               });
           });
         });
+      });
+  });
+  test("GET 200: sends an empty array when no comments have been made at valid article_id", () => {
+    return request(app)
+      .get("/api/users/0001/projects")
+      .expect(200)
+      .then((response) => {
+        const { projects } = response.body;
+        expect(projects).toHaveLength(0);
+        expect(Array.isArray(projects)).toBe(true);
+      });
+  });
+  test.skip("GET:404 sends an appropriate status and error message when given a valid but non-existent id", () => {
+    return request(app)
+      .get("/api/users/9999/projects")
+      .expect(404)
+      .then((response) => {
+        const { msg } = response.body;
+        expect(msg).toBe("article does not exist");
+      });
+  });
+  test("GET:400 sends an appropriate status and error message when given an invalid id", () => {
+    return request(app)
+      .get("/api/users/forklift/projects")
+      .expect(400)
+      .then((response) => {
+        const { msg } = response.body;
+        expect(msg).toBe("bad request");
       });
   });
 });

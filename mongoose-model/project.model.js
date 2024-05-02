@@ -18,7 +18,7 @@ const listSchema = new mongoose.Schema({
 });
 
 const projectSchema = new mongoose.Schema({
-  firebaseUserId: { type: String, required: true },
+  firebaseUserId: { type: Number, required: true },
   name: { type: String, required: true },
   description: { type: String, required: false },
   created_at: { type: Date, default: Date.now },
