@@ -10,7 +10,4 @@ exports.seed = (data) => {
     .catch((err) => {
       throw err;
     })
-    .finally(() => {
-      mongoose.disconnect();
-    });
 };

@@ -5,13 +5,20 @@ const mongoose = require("mongoose");
 const { seed } = require("../database/seed");
 const { connectToDb } = require("../database/connection");
 
-beforeEach(() => {
+beforeAll(() => {
   return connectToDb()
     .then(() => {
-      return seed(data);
+      console.log("Database connected");
     })
+    .catch((err) => {
+      throw err;
+    });
+});
+
+beforeEach(() => {
+  return seed(data)
     .then(() => {
-      console.log("test data successfully seeded");
+      console.log("Database seeded");
     })
     .catch((err) => {
       throw err;
@@ -38,44 +45,44 @@ describe("/api", () => {
   });
 });
 
-// describe("/api/users/:user_id/projects", () => {
-//   test("GET:200 sends an array of projects for the given user", () => {
-//     return request(app)
-//       .get("/api/users/6789/projects")
-//       .expect(200)
-//       .then((response) => {
-//         const { projects } = response.body;
-//         expect(projects).toHaveLength(2);
-//         projects.forEach((project) => {
-//           expect(project).toEqual(
-//             expect.objectContaining({
-//               firebaseUserId: "6789",
-//               name: expect.any(String),
-//               created_at: expect.any(String),
-//               lists: expect.any(Array),
-//             })
-//           );
-//           project.lists.forEach((list) => {
-//             expect(list).toEqual(
-//               expect.objectContaining({
-//                 name: expect.any(String),
-//                 created_at: expect.any(String),
-//                 tickets: expect.any(Array),
-//               })
-//             ),
-//               list.tickets.forEach((ticket) => {
-//                 expect(ticket).toEqual(
-//                   expect.objectContaining({
-//                     name: expect.any(String),
-//                     created_at: expect.any(String),
-//                   })
-//                 );
-//               });
-//           });
-//         });
-//       });
-//   });
-// });
+describe("/api/users/:user_id/projects", () => {
+  test.only("GET:200 sends an array of projects for the given user", () => {
+    return request(app)
+      .get("/api/users/6789/projects")
+      .expect(200)
+      .then((response) => {
+        const { projects } = response.body;
+        expect(projects).toHaveLength(2);
+        projects.forEach((project) => {
+          expect(project).toEqual(
+            expect.objectContaining({
+              firebaseUserId: "6789",
+              name: expect.any(String),
+              created_at: expect.any(String),
+              lists: expect.any(Array),
+            })
+          );
+          project.lists.forEach((list) => {
+            expect(list).toEqual(
+              expect.objectContaining({
+                name: expect.any(String),
+                created_at: expect.any(String),
+                tickets: expect.any(Array),
+              })
+            ),
+              list.tickets.forEach((ticket) => {
+                expect(ticket).toEqual(
+                  expect.objectContaining({
+                    name: expect.any(String),
+                    created_at: expect.any(String),
+                  })
+                );
+              });
+          });
+        });
+      });
+  });
+});
 
 describe("GET 404 - invalid endpoint", () => {
   test("GET:404 sends an appropriate status and error message when sent a non existent route", () => {

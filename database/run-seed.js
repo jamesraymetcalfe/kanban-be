@@ -7,11 +7,11 @@ const runSeed = () => {
     .then(() => {
       return seed(data);
     })
-    .then(() => {
-      console.log("development data successfully seeded");
-    })
     .catch((err) => {
       throw err;
+    })
+    .finally(() => {
+      mongoose.disconnect();
     });
 };
 
