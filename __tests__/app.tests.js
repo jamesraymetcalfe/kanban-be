@@ -4,25 +4,18 @@ const data = require("../database/data/test-data.json");
 const mongoose = require("mongoose");
 const { seed } = require("../database/seed");
 const { connectToDb } = require("../database/connection");
+const Project = require("../mongoose-model/project.model");
 
 beforeAll(() => {
-  return connectToDb()
-    .then(() => {
-      console.log("Database connected");
-    })
-    .catch((err) => {
-      throw err;
-    });
+  return connectToDb().catch((err) => {
+    throw err;
+  });
 });
 
 beforeEach(() => {
-  return seed(data)
-    .then(() => {
-      console.log("Database seeded");
-    })
-    .catch((err) => {
-      throw err;
-    });
+  return seed(data).catch((err) => {
+    throw err;
+  });
 });
 
 afterAll(() => mongoose.disconnect());
@@ -82,7 +75,7 @@ describe("/api/users/:user_id/projects", () => {
         });
       });
   });
-  test("GET 200: sends an empty array when no comments have been made at valid article_id", () => {
+  test("GET 200: sends an empty array when no projects have been created at valid article_id", () => {
     return request(app)
       .get("/api/users/0001/projects")
       .expect(200)
@@ -104,6 +97,43 @@ describe("/api/users/:user_id/projects", () => {
   test("GET:400 sends an appropriate status and error message when given an invalid id", () => {
     return request(app)
       .get("/api/users/forklift/projects")
+      .expect(400)
+      .then((response) => {
+        const { msg } = response.body;
+        expect(msg).toBe("bad request");
+      });
+  });
+});
+
+describe("/api/projects/:project_id", () => {
+  test("GET:200 serves up a single project with the correct id", () => {
+    return Project.findOne()
+      .then((data) => {
+        const id = data._id.toString();
+        return id;
+      })
+      .then((id) => {
+        return request(app)
+          .get(`/api/projects/${id}`)
+          .expect(200)
+          .then((response) => {
+            const { project } = response.body;
+            expect(project._id).toBe(id);
+          });
+      });
+  });
+  test("GET:404 sends an appropriate status and error message when given a valid but non-existent id", () => {
+    return request(app)
+      .get("/api/projects/55153a8014829a865bbf700d")
+      .expect(404)
+      .then((response) => {
+        const { msg } = response.body;
+        expect(msg).toBe("article does not exist");
+      });
+  });
+  test.only("GET:400 sends an appropriate status and error message when given an invalid id", () => {
+    return request(app)
+      .get("/api/projects/forklift")
       .expect(400)
       .then((response) => {
         const { msg } = response.body;

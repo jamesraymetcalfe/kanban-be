@@ -7,6 +7,7 @@ const {
   handleMongoErrors,
 } = require("./errors/errors");
 const { getProjectsByUserID } = require("./controllers/user-controller");
+const { getProjectByID } = require("./controllers/project-controller");
 
 const app = express();
 app.use(express.json());
@@ -14,6 +15,8 @@ app.use(express.json());
 app.get("/api", getEndpoints);
 
 app.get("/api/users/:user_id/projects", getProjectsByUserID);
+
+app.get("/api/projects/:project_id", getProjectByID);
 
 //above here
 
