@@ -6,3 +6,11 @@ exports.selectProjectsByUserID = (user_id) => {
     return projects;
   });
 };
+
+exports.insertProjectToUser = (user_id, newProject) => {
+   // add in a userExists check once firebase set up
+  const project = new Project(newProject);
+  return project.save().then((project) => {
+    return project;
+  });
+};
