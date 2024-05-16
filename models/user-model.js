@@ -9,6 +9,7 @@ exports.selectProjectsByUserID = (user_id) => {
 
 exports.insertProjectToUser = (user_id, newProject) => {
    // add in a userExists check once firebase set up
+  const {name} = newProject
   const project = new Project(newProject);
   return project.save().then((project) => {
     return project;

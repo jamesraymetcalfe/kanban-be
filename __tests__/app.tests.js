@@ -155,7 +155,37 @@ describe("/api/users/:user_id/projects", () => {
         expect(msg).toBe("bad request");
       });
   });
-test("POST:400 sends an appropriate status and error when new comment is missing a required field")
+  test("POST:400 sends an appropriate status and error when new project is missing a required field", () => {
+    const newProject = {
+      firebaseUserId: "6789",
+      description: "description for new project",
+      lists: [],
+    };
+    return request(app)
+      .post("/api/users/6789/projects")
+      .send(newProject)
+      .expect(400)
+      .then((response) => {
+        const { msg } = response.body;
+        expect(msg).toBe("bad request");
+      });
+  });
+  test("POST:400 sends an appropriate status and error when 'name' value is an empty string", () => {
+    const newProject = {
+      firebaseUserId: "6789",
+      name: "",
+      description: "description for new project",
+      lists: [],
+    };
+    return request(app)
+      .post("/api/users/6789/projects")
+      .send(newProject)
+      .expect(400)
+      .then((response) => {
+        const { msg } = response.body;
+        expect(msg).toBe("bad request");
+      });
+  });
 });
 
 describe("/api/projects/:project_id", () => {
