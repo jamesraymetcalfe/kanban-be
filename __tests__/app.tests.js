@@ -122,69 +122,70 @@ describe("/api/users/:user_id/projects", () => {
           expect(project.firebaseUserId).toBe(6789);
         });
     });
-  });
-  test.skip("POST:404 sends an appropriate status and error message when given a valid but non-existent User_id", () => {
-    const newProject = {
-      firebaseUserId: 9999,
-      name: "new Project 6",
-      description: "description for new project",
-      lists: [],
-    };
-    return request(app)
-      .post("/api/users/9999/projects")
-      .send(newProject)
-      .expect(201)
-      .then((response) => {
-        const { msg } = response.body;
-        expect(msg).toBe("project does not exist");
-      });
-  });
-  test("POST:400 sends an appropriate status and error message when given an invalid User_id", () => {
-    const newProject = {
-      firebaseUserId: "forklift",
-      name: "new Project 6",
-      description: "description for new project",
-      lists: [],
-    };
-    return request(app)
-      .post("/api/users/forklift/projects")
-      .send(newProject)
-      .expect(400)
-      .then((response) => {
-        const { msg } = response.body;
-        expect(msg).toBe("bad request");
-      });
-  });
-  test("POST:400 sends an appropriate status and error when new project is missing a required field", () => {
-    const newProject = {
-      firebaseUserId: "6789",
-      description: "description for new project",
-      lists: [],
-    };
-    return request(app)
-      .post("/api/users/6789/projects")
-      .send(newProject)
-      .expect(400)
-      .then((response) => {
-        const { msg } = response.body;
-        expect(msg).toBe("bad request");
-      });
-  });
-  test("POST:400 sends an appropriate status and error when 'name' value is an empty string", () => {
-    const newProject = {
-      firebaseUserId: "6789",
-      name: "",
-      description: "description for new project",
-      lists: [],
-    };
-    return request(app)
-      .post("/api/users/6789/projects")
-      .send(newProject)
-      .expect(400)
-      .then((response) => {
-        const { msg } = response.body;
-        expect(msg).toBe("bad request");
-      });
+
+    test.skip("POST:404 sends an appropriate status and error message when given a valid but non-existent User_id", () => {
+      const newProject = {
+        firebaseUserId: 9999,
+        name: "new Project 6",
+        description: "description for new project",
+        lists: [],
+      };
+      return request(app)
+        .post("/api/users/9999/projects")
+        .send(newProject)
+        .expect(201)
+        .then((response) => {
+          const { msg } = response.body;
+          expect(msg).toBe("project does not exist");
+        });
+    });
+    test("POST:400 sends an appropriate status and error message when given an invalid User_id", () => {
+      const newProject = {
+        firebaseUserId: "forklift",
+        name: "new Project 6",
+        description: "description for new project",
+        lists: [],
+      };
+      return request(app)
+        .post("/api/users/forklift/projects")
+        .send(newProject)
+        .expect(400)
+        .then((response) => {
+          const { msg } = response.body;
+          expect(msg).toBe("bad request");
+        });
+    });
+    test("POST:400 sends an appropriate status and error when new project is missing a required field", () => {
+      const newProject = {
+        firebaseUserId: "6789",
+        description: "description for new project",
+        lists: [],
+      };
+      return request(app)
+        .post("/api/users/6789/projects")
+        .send(newProject)
+        .expect(400)
+        .then((response) => {
+          const { msg } = response.body;
+          expect(msg).toBe("bad request");
+        });
+    });
+    test("POST:400 sends an appropriate status and error when 'name' value is an empty string", () => {
+      const newProject = {
+        firebaseUserId: "6789",
+        name: "",
+        description: "description for new project",
+        lists: [],
+      };
+      return request(app)
+        .post("/api/users/6789/projects")
+        .send(newProject)
+        .expect(400)
+        .then((response) => {
+          const { msg } = response.body;
+          expect(msg).toBe("bad request");
+        });
+    });
   });
 });
 
@@ -225,7 +226,85 @@ describe("/api/projects/:project_id", () => {
         });
     });
   });
-  describe("PATCH", () => {});
+  describe("PATCH", () => {
+    test("PATCH:200 sends the project with the updated value to the client", () => {
+      return Project.findOne()
+        .then((data) => {
+          const id = data._id.toString();
+          return id;
+        })
+        .then((id) => {
+          const name = { name: "test project with an update!" };
+          return request(app)
+            .patch(`/api/projects/${id}`)
+            .send(name)
+            .expect(200)
+            .then((response) => {
+              const { project } = response.body;
+              expect(project._id).toBe(id);
+              expect(project.name).toBe("test project with an update!");
+            });
+        });
+    });
+    test("PATCH:404 sends an appropriate status and error message when given a valid but non-existent project_id", () => {
+      return request(app)
+        .patch("/api/projects/55153a8014829a865bbf700d")
+        .expect(404)
+        .then((response) => {
+          const { msg } = response.body;
+          expect(msg).toBe("project does not exist");
+        });
+    });
+    test("PATCH:400 sends an appropriate status and error message when given an invalid project_id", () => {
+      return request(app)
+        .patch("/api/projects/forklift")
+        .expect(400)
+        .then((response) => {
+          const { msg } = response.body;
+          expect(msg).toBe("bad request");
+        });
+    });
+    test("PATCH:400 sends an appropriate status and error message when given an invalid value", () => {
+      return Project.findOne()
+        .then((data) => {
+          const id = data._id.toString();
+          return id;
+        })
+        .then((id) => {
+          const name = {
+            name: 12344,
+          };
+          return request(app)
+            .patch(`/api/projects/${id}`)
+            .send(name)
+            .expect(400)
+            .then((response) => {
+              const { msg } = response.body;
+              expect(msg).toBe("bad request");
+            });
+        });
+    });
+    test("PATCH:400 sends an appropriate status and error message when update is an empty string", () => {
+      return Project.findOne()
+        .then((data) => {
+          const id = data._id.toString();
+          return id;
+        })
+        .then((id) => {
+          const name = {
+            name: "",
+          };
+          return request(app)
+            .patch(`/api/projects/${id}`)
+            .send(name)
+            .expect(400)
+            .then((response) => {
+              const { msg } = response.body;
+              expect(msg).toBe("bad request");
+            });
+        });
+    })
+  });
 });
 
 describe("GET 404 - invalid endpoint", () => {

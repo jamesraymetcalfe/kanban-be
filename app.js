@@ -6,8 +6,14 @@ const {
   handleCustomErrors,
   handleMongoErrors,
 } = require("./errors/errors");
-const { getProjectsByUserID, postProjectToUser } = require("./controllers/user-controller");
-const { getProjectByID } = require("./controllers/project-controller");
+const {
+  getProjectsByUserID,
+  postProjectToUser,
+} = require("./controllers/user-controller");
+const {
+  getProjectByID,
+  patchProjectByID,
+} = require("./controllers/project-controller");
 
 const app = express();
 app.use(express.json());
@@ -16,9 +22,11 @@ app.get("/api", getEndpoints);
 
 app.get("/api/users/:user_id/projects", getProjectsByUserID);
 
-app.post("/api/users/:user_id/projects", postProjectToUser)
+app.post("/api/users/:user_id/projects", postProjectToUser);
 
 app.get("/api/projects/:project_id", getProjectByID);
+
+app.patch("/api/projects/:project_id", patchProjectByID);
 
 //above here
 
