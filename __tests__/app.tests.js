@@ -303,7 +303,37 @@ describe("/api/projects/:project_id", () => {
               expect(msg).toBe("bad request");
             });
         });
-    })
+    });
+  });
+  describe("DELETE", () => {
+    test("DELETE:204 deletes the specified project and sends back an appropriate status code", () => {
+      return Project.findOne()
+        .then((data) => {
+          const id = data._id.toString();
+          return id;
+        })
+        .then((id) => {
+          return request(app).delete(`/api/projects/${id}`).expect(204);
+        });
+    });
+  });
+  test("DELETE:404 sends an appropriate status and error message when given a valid but non-existent id", () => {
+    return request(app)
+      .delete("/api/projects/55153a8014829a865bbf700d")
+      .expect(404)
+      .then((response) => {
+        const { msg } = response.body;
+        expect(msg).toBe("project does not exist");
+      });
+  });
+  test("DELETE:400 sends an appropriate status and error message when given an invalid value", () => {
+    return request(app)
+      .delete("/api/projects/forklift")
+      .expect(400)
+      .then((response) => {
+        const { msg } = response.body;
+        expect(msg).toBe("bad request");
+      });
   });
 });
 

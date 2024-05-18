@@ -13,6 +13,7 @@ const {
 const {
   getProjectByID,
   patchProjectByID,
+  deleteProjectByID,
 } = require("./controllers/project-controller");
 
 const app = express();
@@ -27,6 +28,8 @@ app.post("/api/users/:user_id/projects", postProjectToUser);
 app.get("/api/projects/:project_id", getProjectByID);
 
 app.patch("/api/projects/:project_id", patchProjectByID);
+
+app.delete("/api/projects/:project_id", deleteProjectByID);
 
 //above here
 

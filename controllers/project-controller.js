@@ -1,6 +1,7 @@
 const {
   selectProjectByID,
   updateProjectByID,
+  removeProjectByID,
 } = require("../models/project-model");
 
 exports.getProjectByID = (request, response, next) => {
@@ -20,6 +21,17 @@ exports.patchProjectByID = (request, response, next) => {
   updateProjectByID(project_id, propertyToUpdate)
     .then((project) => {
       response.status(200).send({ project });
+    })
+    .catch((err) => {
+      next(err);
+    });
+};
+
+exports.deleteProjectByID = (request, response, next) => {
+  const { project_id } = request.params;
+  removeProjectByID(project_id)
+    .then(() => {
+      response.status(204).send();
     })
     .catch((err) => {
       next(err);
